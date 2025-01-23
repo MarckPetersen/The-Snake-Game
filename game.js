@@ -2,24 +2,30 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// Game constants (scaled up)
-const scale = 20;  // keep the scale the same to maintain the same block size
-const rows = canvas.height / scale;  // will now be 60
-const columns = canvas.width / scale;  // will now be 60
+// Game constants (scaled down)
+const scale = 20;  // Keep the scale the same for block size
+const rows = canvas.height / scale;  // Will now be 20
+const columns = canvas.width / scale;  // Will now be 20
 
 // Initial Snake and Food state
 let snake = [
-    {x: 30 * scale, y: 30 * scale},
-    {x: 29 * scale, y: 30 * scale},
-    {x: 28 * scale, y: 30 * scale}
+    {x: 10 * scale, y: 10 * scale},
+    {x: 9 * scale, y: 10 * scale},
+    {x: 8 * scale, y: 10 * scale}
 ];
-let food = {x: 40 * scale, y: 40 * scale};
+let food = {x: 15 * scale, y: 15 * scale};
 let direction = "RIGHT";
 let score = 0;
 
 // Load the image (replace 'me.png' with the actual image filename and path)
 const foodImage = new Image();
 foodImage.src = 'me.png';  // Adjust the path if needed
+
+// Ensure the image is loaded before trying to draw it
+foodImage.onload = () => {
+    // Update the game loop to draw the image when it's ready
+    setInterval(gameLoop, 100);
+};
 
 // Update the snake's position based on direction
 function updateSnakePosition() {
@@ -49,7 +55,9 @@ function drawSnake() {
 
 // Draw the food as an image (me)
 function drawFood() {
-    ctx.drawImage(foodImage, food.x, food.y, scale, scale);  // Use the image for food
+    if (foodImage.complete) {
+        ctx.drawImage(foodImage, food.x, food.y, scale, scale);  // Use the image for food
+    }
 }
 
 // Generate a random position for the food
@@ -87,13 +95,10 @@ function checkGameOver() {
     ) {
         alert("Game Over! Score: " + score);
         snake = [
-            {x: 30 * scale, y: 30 * scale},
-            {x: 29 * scale, y: 30 * scale},
-            {x: 28 * scale, y: 30 * scale}
+            {x: 10 * scale, y: 10 * scale},
+            {x: 9 * scale, y: 10 * scale},
+            {x: 8 * scale, y: 10 * scale}
         ];
         score = 0;
     }
 }
-
-// Start the game loop
-setInterval(gameLoop, 100);
