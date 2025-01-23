@@ -31,16 +31,22 @@ foodImage.onload = () => {
 function updateSnakePosition() {
     const head = {x: snake[0].x, y: snake[0].y};
 
+    // Move the snake's head in the direction
     if (direction === "LEFT") head.x -= scale;
     if (direction === "RIGHT") head.x += scale;
     if (direction === "UP") head.y -= scale;
     if (direction === "DOWN") head.y += scale;
 
+    // Add the new head to the front of the snake
     snake.unshift(head);
+
+    // Check if the snake eats the food
     if (head.x === food.x && head.y === food.y) {
+        // Generate new food position
         food = randomPosition();
         score++;
     } else {
+        // Remove the last segment of the snake (tail)
         snake.pop();
     }
 }
