@@ -2,10 +2,10 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// Game constants (scaled down)
-const scale = 20;  // Keep the scale the same for block size
-const rows = canvas.height / scale;  // Will now be 20
-const columns = canvas.width / scale;  // Will now be 20
+// Game constants
+const scale = 20;  // Block size (each block is 20x20)
+const rows = canvas.height / scale;  // 400px / 20px = 20 rows
+const columns = canvas.width / scale;  // 400px / 20px = 20 columns
 
 // Initial Snake and Food state
 let snake = [
@@ -16,16 +16,6 @@ let snake = [
 let food = {x: 15 * scale, y: 15 * scale};
 let direction = "RIGHT";
 let score = 0;
-
-// Load the image (replace 'me.png' with the actual image filename and path)
-const foodImage = new Image();
-foodImage.src = 'me.png';  // Adjust the path if needed
-
-// Ensure the image is loaded before trying to draw it
-foodImage.onload = () => {
-    // Update the game loop to draw the image when it's ready
-    setInterval(gameLoop, 100);
-};
 
 // Update the snake's position based on direction
 function updateSnakePosition() {
@@ -54,16 +44,15 @@ function updateSnakePosition() {
 // Draw the snake
 function drawSnake() {
     snake.forEach((segment, index) => {
-        ctx.fillStyle = index === 0 ? "green" : "black";
+        ctx.fillStyle = index === 0 ? "green" : "black"; // Green for head, black for body
         ctx.fillRect(segment.x, segment.y, scale, scale);
     });
 }
 
-// Draw the food as an image (me)
+// Draw the food (simple square for food)
 function drawFood() {
-    if (foodImage.complete) {
-        ctx.drawImage(foodImage, food.x, food.y, scale, scale);  // Use the image for food
-    }
+    ctx.fillStyle = "red";
+    ctx.fillRect(food.x, food.y, scale, scale);
 }
 
 // Generate a random position for the food
@@ -84,7 +73,7 @@ document.addEventListener("keydown", event => {
 
 // Main game loop
 function gameLoop() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
     updateSnakePosition();
     drawSnake();
     drawFood();
@@ -94,12 +83,14 @@ function gameLoop() {
 // Check if the snake hits the wall or itself
 function checkGameOver() {
     const head = snake[0];
+    // Check if the head goes out of bounds or collides with the body
     if (
         head.x < 0 || head.x >= canvas.width || 
         head.y < 0 || head.y >= canvas.height || 
         snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y)
     ) {
         alert("Game Over! Score: " + score);
+        // Reset the game to initial state
         snake = [
             {x: 10 * scale, y: 10 * scale},
             {x: 9 * scale, y: 10 * scale},
@@ -108,3 +99,6 @@ function checkGameOver() {
         score = 0;
     }
 }
+
+// Start the game loop
+setInterval(gameLoop, 100);  // 100ms for game loop
