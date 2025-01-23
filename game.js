@@ -17,6 +17,10 @@ let food = {x: 40 * scale, y: 40 * scale};
 let direction = "RIGHT";
 let score = 0;
 
+// Load the image (replace 'me.png' with the actual image filename and path)
+const foodImage = new Image();
+foodImage.src = 'me.png';  // Adjust the path if needed
+
 // Update the snake's position based on direction
 function updateSnakePosition() {
     const head = {x: snake[0].x, y: snake[0].y};
@@ -43,10 +47,9 @@ function drawSnake() {
     });
 }
 
-// Draw the food
+// Draw the food as an image (me)
 function drawFood() {
-    ctx.fillStyle = "red";
-    ctx.fillRect(food.x, food.y, scale, scale);
+    ctx.drawImage(foodImage, food.x, food.y, scale, scale);  // Use the image for food
 }
 
 // Generate a random position for the food
