@@ -2,18 +2,18 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// Game constants
-const scale = 20;
-const rows = canvas.height / scale;
-const columns = canvas.width / scale;
+// Game constants (scaled up)
+const scale = 20;  // keep the scale the same to maintain the same block size
+const rows = canvas.height / scale;  // will now be 60
+const columns = canvas.width / scale;  // will now be 60
 
 // Initial Snake and Food state
 let snake = [
-    {x: 5 * scale, y: 5 * scale},
-    {x: 4 * scale, y: 5 * scale},
-    {x: 3 * scale, y: 5 * scale}
+    {x: 30 * scale, y: 30 * scale},
+    {x: 29 * scale, y: 30 * scale},
+    {x: 28 * scale, y: 30 * scale}
 ];
-let food = {x: 10 * scale, y: 10 * scale};
+let food = {x: 40 * scale, y: 40 * scale};
 let direction = "RIGHT";
 let score = 0;
 
@@ -84,9 +84,9 @@ function checkGameOver() {
     ) {
         alert("Game Over! Score: " + score);
         snake = [
-            {x: 5 * scale, y: 5 * scale},
-            {x: 4 * scale, y: 5 * scale},
-            {x: 3 * scale, y: 5 * scale}
+            {x: 30 * scale, y: 30 * scale},
+            {x: 29 * scale, y: 30 * scale},
+            {x: 28 * scale, y: 30 * scale}
         ];
         score = 0;
     }
