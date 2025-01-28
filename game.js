@@ -34,7 +34,7 @@ function updateSnakePosition() {
     if (head.x === food.x && head.y === food.y) {
         // Generate new food position
         food = randomPosition();
-        score++;
+        score++; // Increase score
     } else {
         // Remove the last segment of the snake (tail)
         snake.pop();
@@ -51,54 +51,4 @@ function drawSnake() {
 
 // Draw the food (simple square for food)
 function drawFood() {
-    ctx.fillStyle = "red";
-    ctx.fillRect(food.x, food.y, scale, scale);
-}
-
-// Generate a random position for the food
-function randomPosition() {
-    return {
-        x: Math.floor(Math.random() * columns) * scale,
-        y: Math.floor(Math.random() * rows) * scale
-    };
-}
-
-// Handle keypresses for direction
-document.addEventListener("keydown", event => {
-    if (event.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
-    if (event.key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
-    if (event.key === "ArrowUp" && direction !== "DOWN") direction = "UP";
-    if (event.key === "ArrowDown" && direction !== "UP") direction = "DOWN";
-});
-
-// Main game loop
-function gameLoop() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
-    updateSnakePosition();
-    drawSnake();
-    drawFood();
-    checkGameOver();
-}
-
-// Check if the snake hits the wall or itself
-function checkGameOver() {
-    const head = snake[0];
-    // Check if the head goes out of bounds or collides with the body
-    if (
-        head.x < 0 || head.x >= canvas.width || 
-        head.y < 0 || head.y >= canvas.height || 
-        snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y)
-    ) {
-        alert("Game Over! Score: " + score);
-        // Reset the game to initial state
-        snake = [
-            {x: 10 * scale, y: 10 * scale},
-            {x: 9 * scale, y: 10 * scale},
-            {x: 8 * scale, y: 10 * scale}
-        ];
-        score = 0;
-    }
-}
-
-// Start the game loop
-setInterval(gameLoop, 100);  // 100ms for game loop
+    ctx.fil
