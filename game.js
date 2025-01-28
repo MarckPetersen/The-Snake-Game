@@ -56,6 +56,13 @@ function drawFood() {
     ctx.fillRect(food.x, food.y, scale, scale);
 }
 
+// Draw the frame
+function drawFrame() {
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(0, 0, canvas.width, canvas.height);
+}
+
 // Generate a random position for the food
 function randomPosition() {
     return {
@@ -75,6 +82,7 @@ document.addEventListener("keydown", event => {
 // Main game loop
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+    drawFrame(); // Draw the frame
     updateSnakePosition();
     drawSnake();
     drawFood();
