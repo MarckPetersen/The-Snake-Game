@@ -15,7 +15,6 @@ let snake = [
 ];
 let food = {x: 15 * scale, y: 15 * scale};
 let direction = "RIGHT";
-let score = 0;
 
 // Update the snake's position based on direction
 function updateSnakePosition() {
@@ -34,7 +33,6 @@ function updateSnakePosition() {
     if (head.x === food.x && head.y === food.y) {
         // Generate new food position
         food = randomPosition();
-        score++; // Increase score
     } else {
         // Remove the last segment of the snake (tail)
         snake.pop();
@@ -63,13 +61,6 @@ function randomPosition() {
     };
 }
 
-// Draw the score
-function drawScore() {
-    ctx.fillStyle = "black";
-    ctx.font = "20px Arial";
-    ctx.fillText("Score: " + score, 10, 30); // Display score in top-left corner
-}
-
 // Handle keypresses for direction
 document.addEventListener("keydown", event => {
     if (event.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
@@ -84,7 +75,6 @@ function gameLoop() {
     updateSnakePosition();
     drawSnake();
     drawFood();
-    drawScore();  // Draw the score
     checkGameOver();
 }
 
@@ -97,14 +87,13 @@ function checkGameOver() {
         head.y < 0 || head.y >= canvas.height || 
         snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y)
     ) {
-        alert("Game Over! Score: " + score);
+        alert("Game Over!");
         // Reset the game to initial state
         snake = [
             {x: 10 * scale, y: 10 * scale},
             {x: 9 * scale, y: 10 * scale},
             {x: 8 * scale, y: 10 * scale}
         ];
-        score = 0;
     }
 }
 
